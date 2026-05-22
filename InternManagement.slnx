@@ -2,7 +2,7 @@
   <Folder Name="/Backend/">
     <Project Path="InterManagement.Application/InterManagement.Application.csproj" />
     <Project Path="InterManagement.Domain/InterManagement.Domain.csproj" />
-    <Project Path="InterMangement.Server/InterMangement.Server.csproj" />
+    <Project Path="InterManagement.Server/InterManagement.Server.csproj" />
     <Project Path="InternManagement.Infrastucture/InternManagement.Infrastucture.csproj" />
   </Folder>
   <Folder Name="/Frontend/">
