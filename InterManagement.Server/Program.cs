@@ -1,3 +1,110 @@
+using InternManagement.Infrastructure;
+using InterManagement.Application;
+using InterManagement.Domain.Exceptions;
+using Microsoft.AspNetCore.Diagnostics;
+
+var builder = WebApplication.CreateBuilder(args);
+
+// ── 1. Services ───────────────────────────────
+builder.Services.AddControllers();
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen(); 
+
+// ── 2. CORS ───────────────────────────────────
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAll", policy =>
+    {
+        policy.AllowAnyOrigin()
+              .AllowAnyMethod()
+              .AllowAnyHeader();
+    });
+});
+
+// ── 3. Branchement des couches ────────────────
+builder.Services
+    .AddInfrastructure(builder.Configuration)
+    .AddApplication();
+
+// ── 4. Construction ───────────────────────────
+var app = builder.Build();
+
+// ── 5. Middleware exceptions ──────────────────
+app.UseExceptionHandler(appError =>
+{
+    appError.Run(async context =>
+    {
+        var exception = context.Features
+            .Get<IExceptionHandlerFeature>()?.Error;
+
+        context.Response.ContentType = "application/json";
+
+        context.Response.StatusCode = exception switch
+        {
+            TraineeNotFoundException      => 404,
+            TraineeAlreadyExistsException => 409,
+            TraineeNotActiveException     => 400,
+            DomainException               => 400,
+            _                             => 500
+        };
+
+        await context.Response.WriteAsJsonAsync(new
+        {
+            error = exception?.Message
+        });
+    });
+});
+
+// ── 6. Pipeline HTTP ──────────────────────────
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger(); 
+    app.UseSwaggerUI(); 
+}
+
+app.UseHttpsRedirection();
+app.UseCors("AllowAll");
+app.UseAuthorization();
+app.MapControllers();
+
+// ── 7. Lancement ──────────────────────────────
+app.Run();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+using Swashbuckle.AspNetCore;
+using InternManagement.Infrastructure;
+using InterManagement.Application;
+using InterManagement.Domain.Exceptions;
+using Microsoft.AspNetCore.Diagnostics;
+
+var builder = WebApplication.CreateBuilder(args);
+// ... le reste du code
+
+
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -12,6 +119,9 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
+    app.UseSwagger();
+    app.UseSwaggerUI();
+
 }
 
 app.UseHttpsRedirection();
@@ -21,3 +131,6 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+
+
+*/
