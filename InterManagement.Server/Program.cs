@@ -39,11 +39,42 @@ app.UseExceptionHandler(appError =>
 
         context.Response.ContentType = "application/json";
 
+
+
+        // Les exceptions Mentor dans le switch
         context.Response.StatusCode = exception switch
         {
             TraineeNotFoundException      => 404,
             TraineeAlreadyExistsException => 409,
             TraineeNotActiveException     => 400,
+            TraineeAlreadyAssignedException => 400,
+
+            MentorNotFoundException       => 404,  // ← Mentor
+            MentorAlreadyExistsException  => 409,  // ← Mentor
+            MentorNotActiveException      => 400,  // ← Mentor
+
+            AdminNotFoundException        => 404,  // ← Admin
+            AdminAlreadyExistsException   => 409,  // ← Admin
+            AdminNotActiveException       => 400,  // ← Admin
+
+            PhaseNotFoundException         => 404,  // ← ajouter
+            PhaseAlreadyCompletedException => 400,  // ← ajouter
+            PhaseCancelledException        => 400,  // ← ajouter
+
+            AssignmentNotFoundException       => 404,  // ← Assignment
+            AssignmentAlreadyExistsException  => 409,  // ← Assignment
+            AssignmentNotActiveException      => 400,  // ← Assignment
+
+            FeedbackNotFoundException          => 404,  // ← Feedback
+
+            WeeklyFollowUpNotFoundException      => 404,  // ← WeeklyFollowUp
+            WeeklyFollowUpAlreadyExistsException => 409,  // ← WeeklyFollowUp
+            WeeklyFollowUpAlreadyDoneException   => 400,  // ← WeeklyFollowUp
+
+            InternFileNotFoundException       => 404,  // ← InternFile
+            InternFileAlreadyExistsException  => 409,  // ← InternFile
+            InternFileTypeNotAllowedException => 400,  // ← InternFile
+
             DomainException               => 400,
             _                             => 500
         };

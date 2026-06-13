@@ -1,96 +1,40 @@
-//> **`TraineeDetailDto`** : utilisé pour le détail. Il contient les mêmes infos de base PLUS les relations. Pour l'instant, la propriété Phases est commentée car l'entité Phase n'existe pas encore.
-
-
-/*
+using InterManagement.Application.Features.Feedbacks.DTOs;
+using InterManagement.Application.Features.Phases.DTOs;
 using InterManagement.Domain.Entities;
 
-namespace InterManagement.Application.Features.Trainees.DTOs
-{
-    public class TraineeDetailDto
-    {
-        public int Id { get; set; }
-        public string FirstName { get; set; } = string.Empty;
-        public string LastName { get; set; } = string.Empty;
-        public string Email { get; set; } = string.Empty;
-        public string University { get; set; } = string.Empty;
-        public string Specialty { get; set; } = string.Empty;
-        public string Theme { get; set; } = string.Empty;
-        public DateOnly StartDate { get; set; }
-        public DateOnly EndDate { get; set; }
-        public TraineeStatus Status { get; set; }
 
-        // ── Relations ─────────────────────────
-        // public ICollection<PhaseDto> Phases { get; set; } = [];
-        // ← commenté car PhaseDto pas encore créé
-    }
-}
-
-*/
-
-
-// ======================================================
-// IMPORTATION (USING)
-// ======================================================
-
-
-using InterManagement.Domain.Entities;
-
-// ======================================================
-// NAMESPACE
-// ======================================================
-
-// Déclare l'espace de noms où se trouve ce fichier
-// Correspond au dossier : Application/Features/Trainees/DTOs/
 namespace InterManagement.Application.Features.Trainees.DTOs;
 
-// ======================================================
-// CLASSE DTO POUR LE DÉTAIL D'UN STAGIAIRE
-// ======================================================
 
-// public → accessible par tous
-// class TraineeDetailDto → nom explicite : ce DTO sert au DÉTAIL d'un stagiaire
-// Ce DTO est utilisé UNIQUEMENT pour la requête GET /api/trainees/{id}
-// Il contient PLUS d'informations que TraineeDto (notamment les relations)
 public class TraineeDetailDto
 {
-    // ==================================================
-    // PROPRIÉTÉS DE BASE (COMME TraineeDto)
-    // ==================================================
-    // Ces propriétés sont identiques à TraineeDto
-    // Elles contiennent les informations principales du stagiaire
-    
-    // ──────────────────────────────────────────────
+
     // IDENTIFIANT
-    // ──────────────────────────────────────────────
-    // Id = identifiant unique du stagiaire
     public int Id { get; set; }
     
-    // ──────────────────────────────────────────────
     // IDENTITÉ
-    // ──────────────────────────────────────────────
     public string FirstName { get; set; } = string.Empty;
     public string LastName { get; set; } = string.Empty;
     public string Email { get; set; } = string.Empty;
     
-    // ──────────────────────────────────────────────
     // INFORMATIONS ACADÉMIQUES
-    // ──────────────────────────────────────────────
     public string University { get; set; } = string.Empty;
     public string Specialty { get; set; } = string.Empty;
     public string Theme { get; set; } = string.Empty;
     
-    // ──────────────────────────────────────────────
     // DATES
-    // ──────────────────────────────────────────────
     public DateOnly StartDate { get; set; }
     public DateOnly EndDate { get; set; }
     
-    // ──────────────────────────────────────────────
     // STATUT
-    // ──────────────────────────────────────────────
     public TraineeStatus  Status { get; set; }
 
     public bool IsActive { get;  set; } = true;
+
+            // ── Relations 
+        public ICollection<PhaseDto> Phases { get; set; } = [];
+        // ← commenté car PhaseDto pas encore créé
+        public ICollection<FeedbackDto> Feedbacks { get; set; } = [];
 
 
 

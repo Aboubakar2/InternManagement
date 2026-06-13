@@ -21,10 +21,14 @@ namespace InternManagement.Infrastructure
             // ── Repositories ──────────────────────
             services.AddScoped<ITraineeRepository, TraineeRepository>();
 
-            // services.AddScoped<IMentorRepository, MentorRepository>();
-            // services.AddScoped<IPhaseRepository, PhaseRepository>();
-            // services.AddScoped<IAssignmentRepository, AssignmentRepository>();
-            // services.AddScoped<IFeedbackRepository, FeedbackRepository>();
+            services.AddScoped<IMentorRepository, MentorRepository>();
+            services.AddScoped<IAdminRepository, AdminRepository>();
+            services.AddScoped<IPhaseRepository, PhaseRepository>();
+            services.AddScoped<IAssignmentRepository, AssignmentRepository>();
+            services.AddScoped<IWeeklyFollowUpRepository, WeeklyFollowUpRepository>();
+            services.AddScoped<IFeedbackRepository, FeedbackRepository>();
+            services.AddScoped<IInternFileRepository, InternFileRepository>();
+            
 
             return services;
         }

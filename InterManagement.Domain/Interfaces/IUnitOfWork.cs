@@ -8,7 +8,7 @@ namespace InterManagement.Domain.Interfaces
         ITraineeRepository Trainees { get; }
         IMentorRepository Mentors { get; }
         
-        //IAdminRepository Admins { get; }
+        IAdminRepository Admins { get; }
         //IPhaseRepository Phases { get; }
         //IAssignmentRepository Assignments { get; }
         //IWeeklyFollowUpRepository WeeklyFollowUps { get; }

@@ -25,15 +25,19 @@ namespace InterManagement.Application.Features.Trainees.Commands.UpdateTrainee
                 throw new TraineeNotActiveException(command.Id);
 
             // 3. Modifier les champs
-            trainee.FirstName  = command.Data.FirstName;
-            trainee.LastName   = command.Data.LastName;
-            trainee.Email      = command.Data.Email;
-            trainee.University = command.Data.University;
-            trainee.Specialty  = command.Data.Specialty;
-            trainee.Theme      = command.Data.Theme;
-            trainee.StartDate  = command.Data.StartDate;
-            trainee.EndDate    = command.Data.EndDate;
-            trainee.Status     = command.Data.Status;
+            trainee.Update(
+                command.Data.FirstName,
+                command.Data.LastName,
+                command.Data.Email,
+                command.Data.University,
+                command.Data.Specialty,
+                command.Data.Theme,
+                command.Data.StartDate,
+                command.Data.EndDate,
+                command.Data.Status
+            );
+
+            
             // 4. Sauvegarder
             await _repository.UpdateAsync(trainee);
 
@@ -55,6 +59,30 @@ namespace InterManagement.Application.Features.Trainees.Commands.UpdateTrainee
         }
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

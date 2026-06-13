@@ -16,7 +16,7 @@ namespace InterManagement.Application.Features.Trainees.Queries.GetTraineeById
         public async Task<TraineeDetailDto> Handle(GetTraineeByIdQuery query)
         {
             // 1. Chercher avec ses phases
-            var trainee = await _repository.GetWithPhasesAsync(query.Id);
+            var trainee = await _repository.GetByIdAsync(query.Id);
             if (trainee == null)
                 throw new TraineeNotFoundException(query.Id);
 

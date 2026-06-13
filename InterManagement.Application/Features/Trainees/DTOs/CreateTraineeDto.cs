@@ -1,6 +1,7 @@
 //**`CreateTraineeDto`** : utilisé pour la création. Le client envoie les données sans l'Id (c'est la base qui le génère) et sans le Status (valeur par défaut InProgress).
 
 
+
 namespace InterManagement.Application.Features.Trainees.DTOs
 {
     public class CreateTraineeDto

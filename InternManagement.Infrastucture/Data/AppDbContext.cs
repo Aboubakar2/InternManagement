@@ -26,10 +26,10 @@ namespace InternManagement.Infrastructure.Data
         public DbSet<Trainee> Trainees { get; set; }
         public DbSet<Phase> Phases { get; set; }
 
-        // public DbSet<Assignment> Assignments { get; set; }
-        // public DbSet<WeeklyFollowUp> WeeklyFollowUps { get; set; }
-        // public DbSet<Feedback> Feedbacks { get; set; }
-        // public DbSet<InternFile> Files { get; set; }
+        public DbSet<Assignment> Assignments { get; set; }
+        public DbSet<WeeklyFollowUp> WeeklyFollowUps { get; set; }
+        public DbSet<Feedback> Feedbacks { get; set; }
+        public DbSet<InternFile> Files { get; set; }
 
 
         // ======================================================
@@ -57,31 +57,91 @@ namespace InternManagement.Infrastructure.Data
 
             // ── Autres tables ─────────────────────
 
-            // modelBuilder.Entity<Assignment>().ToTable("assignments");
-            // modelBuilder.Entity<WeeklyFollowUp>().ToTable("weekly_follow_ups");
-            // modelBuilder.Entity<Feedback>().ToTable("feedbacks");
-            // modelBuilder.Entity<InternFile>().ToTable("files");
+            modelBuilder.Entity<Assignment>().ToTable("assignments");
+            modelBuilder.Entity<WeeklyFollowUp>().ToTable("weekly_follow_ups");
+            modelBuilder.Entity<Feedback>().ToTable("feedbacks");
+            modelBuilder.Entity<InternFile>().ToTable("files");
 
 
             // ── Soft delete global ────────────────
-            //modelBuilder.Entity<Trainee>()
-                //.HasQueryFilter(t => !t.IsDeleted);
-
-            //modelBuilder.Entity<Mentor>()
-                //.HasQueryFilter(m => !m.IsDeleted);
-            
             modelBuilder.Entity<User>()
-                 .HasQueryFilter(u => !u.IsDeleted);
+                .HasQueryFilter(u => !u.IsDeleted);
 
             modelBuilder.Entity<Phase>()
                 .HasQueryFilter(p => !p.IsDeleted);
+               
+            modelBuilder.Entity<WeeklyFollowUp>()
+                .HasQueryFilter(w => !w.IsDeleted);
 
-            // modelBuilder.Entity<Assignment>()
-            //    .HasQueryFilter(a => !a.IsDeleted);
+            modelBuilder.Entity<Assignment>()
+               .HasQueryFilter(a => !a.IsDeleted);
+            
+            // Relations Assignment
+            modelBuilder.Entity<Assignment>()       // On configure la relation entre Assignment et Trainee
+                .HasOne(a => a.Trainee)             // Un assignment a UN stagiaire
+                .WithMany(t => t.Assignments)       // un stagiaire a plusieurs assignments
+                .HasForeignKey(a => a.TraineeId)    // → "La clé étrangère est TraineeId"
+                .OnDelete(DeleteBehavior.Restrict); // "On ne peut pas supprimer un stagiaire qui a encore des assignments"
 
-            // modelBuilder.Entity<WeeklyFollowUp>()
-            //    .HasQueryFilter(w => !w.IsDeleted);
+            modelBuilder.Entity<Assignment>()
+                .HasOne(a => a.Mentor)
+                .WithMany(m => m.Assignments)
+                .HasForeignKey(a => a.MentorId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Assignment>()
+                .HasOne(a => a.Phase)
+                .WithMany(p => p.Assignments)
+                .HasForeignKey(a => a.PhaseId)
+                .OnDelete(DeleteBehavior.Restrict);  
+                
+
+            // Relations dans OnModelCreating
+        
+            modelBuilder.Entity<WeeklyFollowUp>()
+                .HasOne(w => w.Trainee)
+                .WithMany(t => t.WeeklyFollowUps)
+                .HasForeignKey(w => w.TraineeId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<WeeklyFollowUp>()
+                .HasOne(w => w.Mentor)
+                .WithMany(m => m.WeeklyFollowUps)
+                .HasForeignKey(w => w.MentorId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<WeeklyFollowUp>()
+                .HasOne(w => w.Phase)
+                .WithMany(p => p.WeeklyFollowUps)
+                .HasForeignKey(w => w.PhaseId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+                            
+            // Relation Feedback
+            modelBuilder.Entity<Feedback>()
+                .HasOne(f => f.Trainee)
+                .WithMany(t => t.Feedbacks)
+                .HasForeignKey(f => f.TraineeId)
+                .OnDelete(DeleteBehavior.Restrict);
+                
+
+
+            // Relation
+            modelBuilder.Entity<InternFile>()
+                .HasOne(f => f.Trainee)
+                .WithMany(t => t.Files)
+                .HasForeignKey(f => f.TraineeId)
+                .OnDelete(DeleteBehavior.Restrict);
+                
+
         }
     }
-}
+ }    
+
+
+
+
+
+
+
 

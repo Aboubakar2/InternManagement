@@ -5,12 +5,18 @@ namespace InterManagement.Domain.Entities
     public class Trainee :  User
     {
         
-        public string University { get;  set; } = string.Empty;
-        public string   Specialty { get;  set; } = string.Empty;
-        public string Theme { get;  set;} = string.Empty;
-        public DateOnly StartDate { get;  set; } 
-        public DateOnly EndDate { get;  set; }
-        public  TraineeStatus Status { get;  set;} = TraineeStatus.InProgress;
+        public string University { get;  private set; } = string.Empty;
+        public string   Specialty { get;  private set; } = string.Empty;
+        public string Theme { get; private set;} = string.Empty;
+        public DateOnly StartDate { get; private set; } 
+        public DateOnly EndDate { get; private set; }
+        public  TraineeStatus Status { get; private set;} = TraineeStatus.InProgress;
+
+        // ── Collections de relations ────────────────────
+        public ICollection<Assignment> Assignments { get; private set; } = []; // Un stagiaire (Trainee) peut avoir plusieurs assignments
+        public ICollection<WeeklyFollowUp> WeeklyFollowUps { get; private set; } = [];  //  Un stagiaire peut avoir plusieurs suivi hebdo (WeeklyFollowUp)
+        public ICollection<Feedback> Feedbacks { get; private set; } = [];
+        public ICollection<InternFile> Files { get; private set; } = [];
 
         public  Trainee () {}
 
@@ -19,7 +25,7 @@ namespace InterManagement.Domain.Entities
         {
             
                     
-                        // ── Champs obligatoires ────────────────────
+            // ── Champs obligatoires ────────────────────
             if (string.IsNullOrWhiteSpace(university))
                 throw new DomainException("L'université est obligatoire");
 
@@ -33,7 +39,7 @@ namespace InterManagement.Domain.Entities
             if (endDate <= startDate)
                 throw new DomainException("La date de fin doit être après la date de début");
 
-            if (startDate < DateOnly.FromDateTime(DateTime.Today))
+            if (startDate < DateOnly.FromDateTime(DateTime.Today))  // DateOnly.FromDateTime(DateTime.Today): Convertit la date d'aujourd'hui en DateOnly
                 throw new DomainException("La date de début ne peut pas être dans le passé");
 
 
@@ -44,14 +50,29 @@ namespace InterManagement.Domain.Entities
             EndDate = endDate;
             Status     = TraineeStatus.InProgress;
 
-
-            
-
-
-
-
             
         }
+
+        public void Update(string firstName, string lastName, string email, string university, string specialty, string theme, DateOnly startDate, DateOnly endDate, TraineeStatus status)
+        {
+            if (string.IsNullOrWhiteSpace(firstName))
+                throw new DomainException("Le prénom est obligatoire");
+
+            if (endDate <= startDate)
+                throw new DomainException("La date de fin doit être après la date de début");
+
+            FirstName  = firstName;
+            LastName   = lastName;
+            Email      = email;
+            University = university;
+            Specialty  = specialty;
+            Theme      = theme;
+            StartDate  = startDate;
+            EndDate    = endDate;
+            Status     = status;
+            UpdatedAt  = DateTime.UtcNow;
+        }
+
 
         
 

@@ -28,12 +28,13 @@ namespace InterManagement.Application.Features.Trainees.DTOs
 
 
 
-// ======================================================
-// IMPORTATION (USING)
-// ======================================================
-
-// Importe les entités du Domain (TraineeStatus)
-// On a besoin de TraineeStatus pour le type de la propriété Status
+/*
+ * Ce DTO est utilisé pour la modification d'un stagiaire (PUT /api/trainees/{id})
+ * Le client peut envoyer seulement les champs qu'il veut modifier
+ * L'Id du stagiaire est dans l'URL, pas dans le body
+ * Le Status peut être modifié (contrairement à la création)
+ * Les champs non envoyés gardent leur valeur par défaut (string.Empty pour les strings)
+ */
 using InterManagement.Domain.Entities;
 
 // ======================================================

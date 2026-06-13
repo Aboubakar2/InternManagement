@@ -19,8 +19,8 @@ namespace InterManagement.Application.Features.Trainees.Queries.GetTrainees
             var trainees = await _repository.GetAllWithFiltersAsync(query.Status);
 
             // 2. Transformer en DTOs et retourner
-            return trainees.Select(t => new TraineeDto
-            {
+            return trainees.Select(t => new TraineeDto     // .Select(...): Pour CHAQUE élément de la liste, applique la transformation ou // "Convertir chaque entité en DTO"
+            {                                              // t =>	Chaque élément individuel (t = un stagiaire)
                 Id         = t.Id,
                 FirstName  = t.FirstName,
                 LastName   = t.LastName,

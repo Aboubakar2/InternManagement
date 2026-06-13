@@ -8,7 +8,6 @@ namespace InternManagement.Infrastructure.Repositories
 {
     public class TraineeRepository(AppDbContext context) : BaseRepository<Trainee>(context), ITraineeRepository
     {
-  
         // ── Méthodes spéciales ────────────────────
 
         public async Task<IEnumerable<Trainee>> GetActiveTraineesAsync()
@@ -20,10 +19,10 @@ namespace InternManagement.Infrastructure.Repositories
 
         public async Task<IEnumerable<Trainee>> GetAllWithFiltersAsync(TraineeStatus? status)
         {
-            var query = _context.Trainees.AsQueryable();
+            var query = _context.Trainees.AsQueryable();     // .AsQueryable() transforme en "requête Morceau par Morceau
 
-            if (status.HasValue)
-                query = query.Where(t => t.Status == status.Value);
+            if (status.HasValue)                             // .HasValue → Vérifie si le nullable contient une valeur ou est null
+                query = query.Where(t => t.Status == status.Value);    // .Value → Extrait la VALEUR RÉELLE d'un type nullable (TraineeStatus? → TraineeStatus)
 
             return await query.ToListAsync();
         }
@@ -50,22 +49,19 @@ namespace InternManagement.Infrastructure.Repositories
         }
 
         public Task<Trainee?> GetWithPhasesAsync(int traineeId)
+
         {
-            throw new NotImplementedException();
+            return _context.Trainees
+                .Include(t => t.Email)
+                .FirstOrDefaultAsync(t => t.Id == traineeId);
         }
 
         public Task<Trainee?> GetWithPhasesAndEvaluationsAsync(int traineeId)
         {
-            throw new NotImplementedException();
+            return _context.Trainees
+                .Include(t => t.Email)
+                .FirstOrDefaultAsync(t => t.Id == traineeId);
         }
     }
 }
 
-
-/*
-
-
-
-
-
-*/

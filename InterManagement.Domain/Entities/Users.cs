@@ -39,25 +39,8 @@ namespace InterManagement.Domain.Entities
             Role = role;
             IsActive = true;
         }
-
     
     }
-
-
-    /*
-
-    public User(string firstName, string lastName, string email, UserRole role)
-{
-
-    FirstName = firstName;
-    LastName  = lastName;
-    Email     = email;
-    Role      = role;
-    IsActive  = true;
-}
-
-    
-    */
     
 }
 

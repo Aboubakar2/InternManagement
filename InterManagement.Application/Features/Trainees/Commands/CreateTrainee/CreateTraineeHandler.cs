@@ -37,6 +37,7 @@ namespace InterManagement.Application.Features.Trainees.Commands.CreateTrainee
         // Handle → nom standard CQRS (exécute la commande)
         // CreateTraineeCommand command → reçoit la commande avec les données
         public async Task<TraineeDto> Handle(CreateTraineeCommand command)
+
         {
 
             // ==============================================
@@ -78,7 +79,7 @@ namespace InterManagement.Application.Features.Trainees.Commands.CreateTrainee
                 command.Data.EndDate,
                 TraineeStatus.InProgress
                 
-            );    
+            );    //  "Je crée un stagiaire en mémoire pour l'envoyer à la base"
             // À ce stade : trainee existe en mémoire, Id = 0 (pas encore en base)
 
 
@@ -96,7 +97,7 @@ namespace InterManagement.Application.Features.Trainees.Commands.CreateTrainee
             // On ne retourne PAS : CreatedAt, UpdatedAt, IsDeleted, Phases, etc.
             // Les valeurs viennent de l'entité trainee (maintenant avec son Id)
             // 4. Retourner le DTO
-            return new TraineeDto
+            return new TraineeDto    
             {
                 Id        = trainee.Id,
                 FirstName = trainee.FirstName,  
@@ -109,7 +110,7 @@ namespace InterManagement.Application.Features.Trainees.Commands.CreateTrainee
                 EndDate    = trainee.EndDate,
                 Status     = trainee.Status,
                 IsActive   = trainee.IsActive   
-            };
+            }; // "Je crée une réponse propre à renvoyer au client"       
         }
     }
 }

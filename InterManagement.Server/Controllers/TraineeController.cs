@@ -118,7 +118,7 @@ namespace InterManagement.Server.Controllers
                 // 2. Exécuter le Handler (valide, crée, sauvegarde)
                 var result  = await _createHandler.Handle(command);
 
-                          
+            
                 // 3. Retourner 201 Created avec :
                 //    - Header Location: /api/trainee/{id}
                 //    - Body: le TraineeDto créé
@@ -172,6 +172,7 @@ namespace InterManagement.Server.Controllers
         // ==================================================
         // MÉTHODE 5 : DELETE supprimer un stagiaire (soft delete)
         // ==================================================       
+        [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
             try
@@ -232,6 +233,146 @@ namespace InterManagement.Server.Controllers
         }
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

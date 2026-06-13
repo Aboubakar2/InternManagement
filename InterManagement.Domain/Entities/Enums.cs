@@ -15,11 +15,20 @@ namespace InterManagement.Domain.Entities
         Suspended
     }
 
-    public enum EvaluationCriteria
+    public enum PhaseStatus
     {
-
-        
+        InProgress,
+        Validated,
+        Suspended
     }
+
+        public enum WeeklyFollowUpStatus
+    {
+        InProgress,
+        Validated,
+        Suspended
+    }
+
 }
 
 

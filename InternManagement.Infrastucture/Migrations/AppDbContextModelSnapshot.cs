@@ -22,6 +22,125 @@ namespace InternManagement.Infrastucture.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
+            modelBuilder.Entity("InterManagement.Domain.Entities.Assignment", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("AssignmentDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<int>("MentorId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("PhaseId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("TraineeId")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MentorId");
+
+                    b.HasIndex("PhaseId");
+
+                    b.HasIndex("TraineeId");
+
+                    b.ToTable("assignments", (string)null);
+                });
+
+            modelBuilder.Entity("InterManagement.Domain.Entities.Feedback", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("Message")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("SentAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int>("TraineeId")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TraineeId");
+
+                    b.ToTable("feedbacks", (string)null);
+                });
+
+            modelBuilder.Entity("InterManagement.Domain.Entities.InternFile", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("FileName")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("FilePath")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("FileType")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("ImportedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<int>("TraineeId")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TraineeId");
+
+                    b.ToTable("files", (string)null);
+                });
+
             modelBuilder.Entity("InterManagement.Domain.Entities.Phase", b =>
                 {
                     b.Property<int>("Id")
@@ -33,27 +152,38 @@ namespace InternManagement.Infrastucture.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("text");
-
                     b.Property<DateOnly>("EndDate")
                         .HasColumnType("date");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("boolean");
 
-                    b.Property<string>("PhaseNumber")
+                    b.Property<string>("Objective")
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<int>("PhaseNumber")
+                        .HasColumnType("integer");
+
                     b.Property<DateOnly>("StartDate")
                         .HasColumnType("date");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<int>("TraineeId")
+                        .HasColumnType("integer");
 
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("timestamp with time zone");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("TraineeId");
 
                     b.ToTable("phases", (string)null);
                 });
@@ -100,6 +230,56 @@ namespace InternManagement.Infrastucture.Migrations
                     b.UseTptMappingStrategy();
                 });
 
+            modelBuilder.Entity("InterManagement.Domain.Entities.WeeklyFollowUp", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Comment")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateOnly>("FollowUpDate")
+                        .HasColumnType("date");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<int>("MentorId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("PhaseId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("TraineeId")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int>("WeekNumber")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MentorId");
+
+                    b.HasIndex("PhaseId");
+
+                    b.HasIndex("TraineeId");
+
+                    b.ToTable("weekly_follow_ups", (string)null);
+                });
+
             modelBuilder.Entity("InterManagement.Domain.Entities.Admin", b =>
                 {
                     b.HasBaseType("InterManagement.Domain.Entities.User");
@@ -115,7 +295,7 @@ namespace InternManagement.Infrastucture.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<string>("Speciality")
+                    b.Property<string>("Specialty")
                         .IsRequired()
                         .HasColumnType("text");
 
@@ -150,6 +330,93 @@ namespace InternManagement.Infrastucture.Migrations
                     b.ToTable("trainees", (string)null);
                 });
 
+            modelBuilder.Entity("InterManagement.Domain.Entities.Assignment", b =>
+                {
+                    b.HasOne("InterManagement.Domain.Entities.Mentor", "Mentor")
+                        .WithMany("Assignments")
+                        .HasForeignKey("MentorId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("InterManagement.Domain.Entities.Phase", "Phase")
+                        .WithMany("Assignments")
+                        .HasForeignKey("PhaseId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("InterManagement.Domain.Entities.Trainee", "Trainee")
+                        .WithMany("Assignments")
+                        .HasForeignKey("TraineeId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Mentor");
+
+                    b.Navigation("Phase");
+
+                    b.Navigation("Trainee");
+                });
+
+            modelBuilder.Entity("InterManagement.Domain.Entities.Feedback", b =>
+                {
+                    b.HasOne("InterManagement.Domain.Entities.Trainee", "Trainee")
+                        .WithMany("Feedbacks")
+                        .HasForeignKey("TraineeId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Trainee");
+                });
+
+            modelBuilder.Entity("InterManagement.Domain.Entities.InternFile", b =>
+                {
+                    b.HasOne("InterManagement.Domain.Entities.Trainee", "Trainee")
+                        .WithMany("Files")
+                        .HasForeignKey("TraineeId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Trainee");
+                });
+
+            modelBuilder.Entity("InterManagement.Domain.Entities.Phase", b =>
+                {
+                    b.HasOne("InterManagement.Domain.Entities.Trainee", "Trainee")
+                        .WithMany()
+                        .HasForeignKey("TraineeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Trainee");
+                });
+
+            modelBuilder.Entity("InterManagement.Domain.Entities.WeeklyFollowUp", b =>
+                {
+                    b.HasOne("InterManagement.Domain.Entities.Mentor", "Mentor")
+                        .WithMany("WeeklyFollowUps")
+                        .HasForeignKey("MentorId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("InterManagement.Domain.Entities.Phase", "Phase")
+                        .WithMany("WeeklyFollowUps")
+                        .HasForeignKey("PhaseId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("InterManagement.Domain.Entities.Trainee", "Trainee")
+                        .WithMany("WeeklyFollowUps")
+                        .HasForeignKey("TraineeId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Mentor");
+
+                    b.Navigation("Phase");
+
+                    b.Navigation("Trainee");
+                });
+
             modelBuilder.Entity("InterManagement.Domain.Entities.Admin", b =>
                 {
                     b.HasOne("InterManagement.Domain.Entities.User", null)
@@ -175,6 +442,31 @@ namespace InternManagement.Infrastucture.Migrations
                         .HasForeignKey("InterManagement.Domain.Entities.Trainee", "Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("InterManagement.Domain.Entities.Phase", b =>
+                {
+                    b.Navigation("Assignments");
+
+                    b.Navigation("WeeklyFollowUps");
+                });
+
+            modelBuilder.Entity("InterManagement.Domain.Entities.Mentor", b =>
+                {
+                    b.Navigation("Assignments");
+
+                    b.Navigation("WeeklyFollowUps");
+                });
+
+            modelBuilder.Entity("InterManagement.Domain.Entities.Trainee", b =>
+                {
+                    b.Navigation("Assignments");
+
+                    b.Navigation("Feedbacks");
+
+                    b.Navigation("Files");
+
+                    b.Navigation("WeeklyFollowUps");
                 });
 #pragma warning restore 612, 618
         }
