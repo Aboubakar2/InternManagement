@@ -1,0 +1,150 @@
+@model TraineeDetailDto
+@{
+    ViewData["Title"] = $"Trainee — {Model.FirstName} {Model.LastName}";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h2>@Model.FirstName @Model.LastName</h2>
+    <div>
+        <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning">Edit</a>
+        <a asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-danger">Delete</a>
+        <a asp-action="Index" class="btn btn-outline-secondary">Back to list</a>
+    </div>
+</div>
+
+<div class="row g-4">
+    <div class="col-md-6">
+        <div class="card h-100">
+            <div class="card-header fw-bold">Personal Info</div>
+            <div class="card-body">
+                <dl class="row mb-0">
+                    <dt class="col-sm-4">First Name</dt>
+                    <dd class="col-sm-8">@Model.FirstName</dd>
+
+                    <dt class="col-sm-4">Last Name</dt>
+                    <dd class="col-sm-8">@Model.LastName</dd>
+
+                    <dt class="col-sm-4">Email</dt>
+                    <dd class="col-sm-8">@Model.Email</dd>
+
+                    <dt class="col-sm-4">Active</dt>
+                    <dd class="col-sm-8">
+                        @if (Model.IsActive)
+                        {
+                            <span class="badge bg-success">Yes</span>
+                        }
+                        else
+                        {
+                            <span class="badge bg-secondary">No</span>
+                        }
+                    </dd>
+                </dl>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="card h-100">
+            <div class="card-header fw-bold">Internship Info</div>
+            <div class="card-body">
+                <dl class="row mb-0">
+                    <dt class="col-sm-4">University</dt>
+                    <dd class="col-sm-8">@Model.University</dd>
+
+                    <dt class="col-sm-4">Specialty</dt>
+                    <dd class="col-sm-8">@Model.Specialty</dd>
+
+                    <dt class="col-sm-4">Theme</dt>
+                    <dd class="col-sm-8">@Model.Theme</dd>
+
+                    <dt class="col-sm-4">Start Date</dt>
+                    <dd class="col-sm-8">@Model.StartDate.ToString("yyyy-MM-dd")</dd>
+
+                    <dt class="col-sm-4">End Date</dt>
+                    <dd class="col-sm-8">@Model.EndDate.ToString("yyyy-MM-dd")</dd>
+
+                    <dt class="col-sm-4">Status</dt>
+                    <dd class="col-sm-8">
+                        <span class="badge @StatusBadgeClass(Model.Status)">@Model.Status</span>
+                    </dd>
+                </dl>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="mt-4">
+    <h4>Phases <span class="badge bg-secondary">@Model.Phases.Count</span></h4>
+    @if (!Model.Phases.Any())
+    {
+        <p class="text-muted">No phases yet.</p>
+    }
+    else
+    {
+        <table class="table table-bordered table-sm align-middle">
+            <thead class="table-light">
+                <tr>
+                    <th>#</th>
+                    <th>Title</th>
+                    <th>Objective</th>
+                    <th>Start</th>
+                    <th>End</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var phase in Model.Phases)
+                {
+                    <tr>
+                        <td>@phase.PhaseNumber</td>
+                        <td>@phase.Title</td>
+                        <td>@phase.Objective</td>
+                        <td>@phase.StartDate.ToString("yyyy-MM-dd")</td>
+                        <td>@phase.EndDate.ToString("yyyy-MM-dd")</td>
+                        <td>
+                            <span class="badge @PhaseBadgeClass(phase.Status)">@phase.Status</span>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+</div>
+
+<div class="mt-4">
+    <h4>Feedbacks <span class="badge bg-secondary">@Model.Feedbacks.Count</span></h4>
+    @if (!Model.Feedbacks.Any())
+    {
+        <p class="text-muted">No feedbacks yet.</p>
+    }
+    else
+    {
+        <div class="list-group">
+            @foreach (var fb in Model.Feedbacks)
+            {
+                <div class="list-group-item">
+                    <small class="text-muted">@fb.SentAt.ToString("yyyy-MM-dd HH:mm")</small>
+                    <p class="mb-0 mt-1">@fb.Message</p>
+                </div>
+            }
+        </div>
+    }
+</div>
+
+@functions {
+    private static string StatusBadgeClass(TraineeStatus status) => status switch
+    {
+        TraineeStatus.InProgress => "bg-primary",
+        TraineeStatus.Completed  => "bg-success",
+        TraineeStatus.Suspended  => "bg-warning text-dark",
+        _                        => "bg-secondary"
+    };
+
+    private static string PhaseBadgeClass(PhaseStatus status) => status switch
+    {
+        PhaseStatus.InProgress => "bg-primary",
+        PhaseStatus.Validated  => "bg-success",
+        PhaseStatus.Suspended  => "bg-warning text-dark",
+        _                      => "bg-secondary"
+    };
+}

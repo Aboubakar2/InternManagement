@@ -1,0 +1,59 @@
+@model TraineeDto
+@{
+    ViewData["Title"] = "Delete Trainee";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h2>Delete Trainee</h2>
+    <a asp-action="Index" class="btn btn-outline-secondary">Back to list</a>
+</div>
+
+@if (TempData["Error"] is string error)
+{
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        @error
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+}
+
+<div class="card border-danger">
+    <div class="card-header bg-danger text-white fw-bold">
+        Confirm Deletion
+    </div>
+    <div class="card-body">
+        <p class="mb-3">Are you sure you want to delete the following trainee?</p>
+
+        <dl class="row">
+            <dt class="col-sm-3">Full Name</dt>
+            <dd class="col-sm-9">@Model.FirstName @Model.LastName</dd>
+
+            <dt class="col-sm-3">Email</dt>
+            <dd class="col-sm-9">@Model.Email</dd>
+
+            <dt class="col-sm-3">University</dt>
+            <dd class="col-sm-9">@Model.University</dd>
+
+            <dt class="col-sm-3">Specialty</dt>
+            <dd class="col-sm-9">@Model.Specialty</dd>
+
+            <dt class="col-sm-3">Theme</dt>
+            <dd class="col-sm-9">@Model.Theme</dd>
+
+            <dt class="col-sm-3">Period</dt>
+            <dd class="col-sm-9">@Model.StartDate.ToString("yyyy-MM-dd") → @Model.EndDate.ToString("yyyy-MM-dd")</dd>
+
+            <dt class="col-sm-3">Status</dt>
+            <dd class="col-sm-9">@Model.Status</dd>
+        </dl>
+
+        <div class="alert alert-warning mt-3">
+            This action performs a soft delete — the trainee's record will be archived but not permanently removed.
+        </div>
+
+        <form asp-action="Delete" asp-route-id="@Model.Id" method="post" class="d-flex gap-2 mt-3">
+            @Html.AntiForgeryToken()
+            <button type="submit" class="btn btn-danger">Yes, delete</button>
+            <a asp-action="Index" class="btn btn-outline-secondary">Cancel</a>
+        </form>
+    </div>
+</div>
