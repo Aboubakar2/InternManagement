@@ -1,0 +1,35 @@
+@*
+=================================================
+FORMULAIRE FEEDBACK MENTOR
+=================================================
+*@
+@model InterManagement.Client.Models.MentorViewModel
+
+<div class="feedback-premium">
+    <div class="feedback-premium-header">
+        <div class="feedback-icon"><i class="fas fa-pen-fancy"></i></div>
+        <div>
+            <h3>Envoyer un message</h3>
+            <p>Écrivez votre message à destination de l'administrateur.</p>
+        </div>
+    </div>
+
+    <form method="post" asp-controller="MentorSpace" asp-action="SendFeedback">
+        @Html.AntiForgeryToken()
+        <input type="hidden" name="mentorId" value="@Model.MentorId" />
+
+        <div class="form-group">
+            <label for="feedbackMessage">Message</label>
+            <textarea name="message" id="feedbackMessage" rows="5"
+                      placeholder="Écrivez votre message ici..."
+                      required></textarea>
+        </div>
+
+        <div class="form-actions feedback-actions" style="margin-top: 1rem;">
+            <span class="feedback-hint">Votre message sera transmis à l'administrateur.</span>
+            <button type="submit" class="btn-feedback-send">
+                <i class="fas fa-paper-plane"></i> Envoyer
+            </button>
+        </div>
+    </form>
+</div>

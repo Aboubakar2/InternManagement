@@ -1,0 +1,6 @@
+@InterMangement.Server_HostAddress = http://localhost:5099
+
+GET {{InterMangement.Server_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

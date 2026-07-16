@@ -1,0 +1,58 @@
+@*
+=================================================
+MODAL DETAIL STAGIAIRE
+Affiche les informations détaillées depuis la ligne
+sélectionnée du tableau stagiaires, en lecture seule
+(avatar, badge de statut, fiche d'informations).
+=================================================
+*@
+<div id="traineeDetailsModal" class="modal">
+    <div class="modal-content" style="max-width: 680px;">
+        <div class="modal-header">
+            <h3><i class="fas fa-user-graduate"></i> Détail stagiaire</h3>
+            <button class="modal-close" onclick="closeModal('traineeDetailsModal')">&times;</button>
+        </div>
+
+        <div class="modal-body">
+            <div class="detail-header">
+                <div class="detail-avatar" id="detailTraineeAvatar">--</div>
+                <div class="detail-header-info">
+                    <div class="detail-name" id="detailTraineeFullName">—</div>
+                    <div class="detail-email" id="detailTraineeEmail">—</div>
+                </div>
+                <div id="detailTraineeStatusBadge"></div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Spécialité</label>
+                    <div class="detail-value" id="detailTraineeSpecialty">—</div>
+                </div>
+                <div class="form-group">
+                    <label>Structure</label>
+                    <div class="detail-value" id="detailTraineeUniversity">—</div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Thème du stage</label>
+                <div class="detail-value" id="detailTraineeTheme">—</div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label><i class="fas fa-calendar-day"></i> Date début</label>
+                    <div class="detail-value" id="detailTraineeStartDate">—</div>
+                </div>
+                <div class="form-group">
+                    <label><i class="fas fa-calendar-check"></i> Date fin</label>
+                    <div class="detail-value" id="detailTraineeEndDate">—</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal-footer">
+            <button type="button" class="btn-secondary" onclick="closeModal('traineeDetailsModal')">Fermer</button>
+        </div>
+    </div>
+</div>

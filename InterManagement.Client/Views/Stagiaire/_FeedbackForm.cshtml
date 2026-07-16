@@ -1,0 +1,36 @@
+@*
+=================================================
+FORMULAIRE FEEDBACK
+=================================================
+*@
+@model InterManagement.Client.Models.StagiaireViewModel
+
+<div class="feedback-premium">
+    <div class="feedback-premium-header">
+        <div class="feedback-icon"><i class="fas fa-pen-fancy"></i></div>
+        <div>
+            <h3>Envoyer un feedback</h3>
+            <p>Partagez vos observations, difficultés et suggestions.</p>
+        </div>
+    </div>
+
+    <form id="feedbackForm" method="post" asp-controller="Stagiaire" asp-action="SendFeedback">
+        @Html.AntiForgeryToken()
+        <input type="hidden" name="TraineeId" value="@Model.TraineeId" />
+
+        <div class="form-grid">
+            <div class="form-group form-full">
+                <label for="feedbackMessage">Commentaire</label>
+                <textarea name="Message" id="feedbackMessage"
+                          placeholder="Partagez vos pensées, difficultés, suggestions..." required></textarea>
+            </div>
+        </div>
+
+        <div class="form-actions feedback-actions">
+            <span class="feedback-hint">Admin recevra ce message immédiatement.</span>
+            <button type="submit" class="btn-feedback-send">
+                <i class="fas fa-paper-plane"></i> Envoyer feedback
+            </button>
+        </div>
+    </form>
+</div>
